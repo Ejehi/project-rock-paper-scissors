@@ -1,7 +1,7 @@
 # Rock Paper Scissors Game
-This game of rock, paper, scissors is played entirely in the console.
+This is game of rock, paper, scissors.
 
-You are playing against the computer and are prompted to pick either rock, paper or scissors.
+You are playing against the computer and can pick either rock, paper or scissors.
 
 The winner is announced after 5 rounds of the game.
 

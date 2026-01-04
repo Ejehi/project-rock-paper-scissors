@@ -1,3 +1,5 @@
+let humanScore = 0, computerScore = 0;
+
 const getComputerChoice = () => {
     let computerChoice;
     let randomNumber = Math.floor(Math.random() * 10);
@@ -13,81 +15,105 @@ const getComputerChoice = () => {
     return computerChoice;
 }
 
-const getHumanChoice = () => {
-    let humanChoice = prompt("Your choice - rock, paper, scissors");
-    return humanChoice;
-}
+const playRound = (humanChoice, computerChoice) => { 
+    const scoreBoard = document.querySelector("#score-board");
 
-
-const playGame = () => {
-
-    let humanScore = 0, computerScore = 0;
-    const playRound = (humanChoice, computerChoice) => { 
-
-        switch(humanChoice.toLowerCase()) {
-            case "rock":
-                switch(computerChoice) {
-                    case "rock":
-                        console.log("Computer chooses ", computerChoice);
-                        console.log("Lucky round! It's a tie");
-                        break;
-                    case "paper":
-                        console.log("Computer chooses ", computerChoice);
-                        computerScore += 1;
-                        console.log("You lose! Paper beats Rock");
-                        break;
-                    case "scissors": 
-                        console.log("Computer chooses ", computerChoice);
-                        humanScore += 1;
-                        console.log("You win! Rock beats Scissors");
-                        break;
-                }
-                break;
-            case "paper":
-                switch(computerChoice) {
-                    case "rock":
-                        console.log("Computer chooses ", computerChoice);
-                        humanScore += 1;
-                        console.log("You win! Paper beats Rock");
-                        break;
-                    case "paper":
-                        console.log("Computer chooses ", computerChoice);
-                        console.log("Lucky round! It's a tie");
-                        break;
-                    case "scissors": 
-                        console.log("Computer chooses ", computerChoice);
-                        computerScore += 1;
-                        console.log("You lose! Scissors beats Paper");
-                        break;
-                }
-                break;
-            default: 
-                switch(computerChoice) {
-                    case "rock":
-                        console.log("Computer chooses ", computerChoice);
-                        computerScore += 1;
-                        console.log("You lose! Rock beats Scissors");
-                        break;
-                    case "paper":
-                        console.log("Computer chooses ", computerChoice);
-                        humanScore += 1;
-                        console.log("You win! Scissors beats Paper");
-                        break;
-                    case "scissors": 
-                        console.log("Computer chooses ", computerChoice);
-                        console.log("Lucky round! It's a tie");
-                        break;
-                }
-        }
+    const scores = document.createElement("p");
+     
+    switch(humanChoice.toLowerCase()) {
+        case "rock":
+            switch(computerChoice) {
+                case "rock":
+                    scoreBoard.textContent = `Computer chooses ${computerChoice} - Lucky round! It's a tie`;
+                    scores.textContent = `You: ${humanScore} | Computer: ${computerScore}`;
+                    scoreBoard.appendChild(scores);
+                    break;
+                case "paper":
+                    scoreBoard.textContent = `Computer chooses ${computerChoice} - Paper beats Rock`;
+                    computerScore += 1;
+                    scores.textContent = `You: ${humanScore} | Computer: ${computerScore}`;
+                    scoreBoard.appendChild(scores);
+                    break;
+                case "scissors": 
+                    scoreBoard.textContent = `Computer chooses ${computerChoice} - Rock beats Scissors`;
+                    humanScore += 1;
+                    scores.textContent = `You: ${humanScore} | Computer: ${computerScore}`;
+                    scoreBoard.appendChild(scores);
+                    break;
+            }
+            break;
+        case "paper":
+            switch(computerChoice) {
+                case "rock":
+                    scoreBoard.textContent = `Computer chooses ${computerChoice} - Paper beats Rock`;
+                    humanScore += 1;
+                    scores.textContent = `You: ${humanScore} | Computer: ${computerScore}`;
+                    scoreBoard.appendChild(scores);
+                    break;
+                case "paper":
+                    scoreBoard.textContent = `Computer chooses ${computerChoice} - Lucky round! It's a tie`;
+                    scores.textContent = `You: ${humanScore} | Computer: ${computerScore}`;
+                    scoreBoard.appendChild(scores);
+                    break;
+                case "scissors": 
+                    scoreBoard.textContent = `Computer chooses ${computerChoice} - Scissors beats Paper`;
+                    computerScore += 1;
+                    scores.textContent = `You: ${humanScore} | Computer: ${computerScore}`;
+                    scoreBoard.appendChild(scores);
+                    break;
+            }
+            break;
+        case "scissors": 
+            switch(computerChoice) {
+                case "rock":
+                    scoreBoard.textContent = `Computer chooses ${computerChoice} - Rock beats Scissors`;
+                    computerScore += 1;
+                    scores.textContent = `You: ${humanScore} | Computer: ${computerScore}`;
+                    scoreBoard.appendChild(scores);
+                    break;
+                case "paper":
+                    scoreBoard.textContent = `Computer chooses ${computerChoice} - Scissors beats Paper`;
+                    humanScore += 1;
+                    scores.textContent = `You: ${humanScore} | Computer: ${computerScore}`;
+                    scoreBoard.appendChild(scores);
+                    break;
+                case "scissors": 
+                    scoreBoard.textContent = `Computer chooses ${computerChoice} - It's a tie`;
+                    scores.textContent = `You: ${humanScore} | Computer: ${computerScore}`;
+                    scoreBoard.appendChild(scores);
+                    break;
+            }
     }
 
-    for(i = 0; i < 5; i++) {
-        playRound(getHumanChoice(), getComputerChoice());
+    if(humanScore == 5) {
+       const winner =  document.createTextNode(`You have won 5 rounds! You win this game`);
+       scoreBoard.appendChild(winner);
+       humanScore = 0;
+       computerScore = 0;
     }
 
-    
-    console.log("You won ", humanScore, " rounds | Computer won: ", computerScore, " rounds");
-    console.log(humanScore == computerScore ? "Its a tie!" : humanScore > computerScore ? "You win!" : "Computer wins!");
+    else if(computerScore == 5) {
+       const winner =  document.createTextNode(`Computer has won 5 rounds! You lose this game`);
+       scoreBoard.appendChild(winner);
+       humanScore = 0;
+       computerScore = 0;
+    }
 }
 
-playGame();
+const content = document.querySelector("body");
+
+const rockSelection = document.querySelector("#rock");
+const paperSelection = document.querySelector("#paper");
+const scissorsSelection = document.querySelector("#scissors");
+
+rockSelection.addEventListener('click', () => {
+    playRound("rock", getComputerChoice());
+});
+
+paperSelection.addEventListener('click', () => {
+    playRound("paper", getComputerChoice());
+});
+
+scissorsSelection.addEventListener('click', () => {
+    playRound("scissors", getComputerChoice());
+});
