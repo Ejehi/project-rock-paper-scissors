@@ -1,5 +1,5 @@
 # Rock Paper Scissors Game
-This is game of rock, paper, scissors.
+This is a game of rock, paper, scissors.
 
 You are playing against the computer and can pick either rock, paper or scissors.
 
